@@ -9,3 +9,8 @@
     @apply px-4 py-2 rounded focus:outline-none transform transition-all duration-300 bg-gradient-to-r from-[#CD684A] via-[#D8864B] to-[#E9B84C] hover:bg-gradient-to-r hover:from-[#E9B84C] hover:via-[#D8864B] hover:to-[#CD684A] text-white;
   }
 }
+@layer components {
+  .input-primary {
+    @apply rounded border border-gray-300 focus:border-transparent  bg-gray-100  px-4 py-2 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-[#CD684A] focus:ring-transparent;
+  }
+}

@@ -1,11 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import useAuth from "../../hooks/useAuth";
 
 const NavBar = () => {
+  const { user, logOut } = useAuth();
   const navLinkClassName = ({ isActive }) =>
     isActive
-      ? "text-blue-500 font-semibold text-lg"
-      : "hover:text-blue-500 text-lg";
+      ? "text-[#D8864B] font-semibold text-base"
+      : "hover:text-[#D8864B] text-base";
 
   const navItems = (
     <>
@@ -85,34 +87,34 @@ const NavBar = () => {
       <div className=" ">
         {/* avatar */}
 
-        {/* {!user ? ( */}
-        <Link to="/login">
-          <button className="button-primary">Login</button>
-        </Link>
-        {/* ) : ( */}
-        <>
-          <div
-            className="avatar mr-2 tooltip tooltip-bottom"
-            //   data-tip={user?.displayName || "Anonymous"}
-          >
-            <div className="w-11 rounded-full border-2 border-blue-500">
-              {/* <img
+        {!user ? (
+          <Link to="/login">
+            <button className="button-primary">Login</button>
+          </Link>
+        ) : (
+          <>
+            <div
+              className="avatar mr-2 tooltip tooltip-bottom"
+              //   data-tip={user?.displayName || "Anonymous"}
+            >
+              <div className="w-11 rounded-full border-2 border-blue-500">
+                <img
                   src={`${
                     user?.photoURL
                       ? user?.photoURL
                       : "https://i.ibb.co/fSHmDMK/image.png"
                   }`}
-                /> */}
+                />
+              </div>
             </div>
-          </div>
-          <button
-            //   onClick={handleLogout}
-            className="button-primary bg-gray-500 hover:bg-gray-600"
-          >
-            Logout
-          </button>
-        </>
-        {/* )} */}
+            <button
+              onClick={logOut}
+              className="button-primary bg-gray-500 hover:bg-gray-600"
+            >
+              Logout
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
