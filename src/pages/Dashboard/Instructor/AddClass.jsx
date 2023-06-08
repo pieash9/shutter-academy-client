@@ -1,9 +1,12 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../../components/Shared/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
+import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
+import { toast } from "react-hot-toast";
 
 const AddClass = () => {
   const { user } = useAuth();
+  const [axiosSecure] = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -11,6 +14,17 @@ const AddClass = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    axiosSecure
+      .post(`/classes`, {
+        ...data,
+        status: "pending",
+        totalEnrolled:0,
+      })
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Class added successfully");
+        }
+      });
   };
   return (
     <div>
