@@ -6,6 +6,7 @@ import GoogleLogin from "../Shared/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
+const image_hosting_token = import.meta.env.VITE_IMGBB_KEY;
 
 const Registration = () => {
   const [show, setShow] = useState(true);
@@ -14,9 +15,10 @@ const Registration = () => {
   const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
   const from = location.state?.from?.pathName || "/";
-  const { loading, setLoading, createUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
 
   const {
     register,
@@ -31,31 +33,49 @@ const Registration = () => {
     }
     setPassErr("");
     console.log(data);
-    const userData = {
-      name: data.name,
-      email: data.email,
-      role: "student",
-      image: data.imageURL,
-      createdAt: new Date().toLocaleDateString(),
-    };
-    createUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
-        updateUserProfile(data.name, data.imageURL).then(() => {
-          //add user to db
-          axiosSecure
-            .post("/users", {
-              ...userData
+
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+    fetch(img_hosting_url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgResponse) => {
+        if (imgResponse.success) {
+          const imgURL = imgResponse.data.display_url;
+
+          const userData = {
+            name: data.name,
+            email: data.email,
+            role: "student",
+            image: imgURL,
+            createdAt: new Date().toLocaleDateString(),
+          };
+          createUser(data.email, data.password)
+            .then((result) => {
+              console.log(result.user);
+              updateUserProfile(data.name, data.imageURL).then(() => {
+                //add user to db
+                axiosSecure
+                  .put(`/users/:${data.email}`, {
+                    ...userData,
+                  })
+                  .then((res) => {
+                    console.log(res.data);
+
+                    if (res.data) {
+                      toast.success("Registration Successful");
+                      navigate(from, { replace: true });
+                    }
+                  });
+              });
             })
-            .then((res) => {
-              if (res.data.insertedId) {
-                toast.success("Registration Successful");
-                navigate(from, { replace: true });
-              }
-            });
-        });
-      })
-      .catch((err) => console.log(err));
+            .catch(() =>
+              toast.error("Something went wrong! please try again!")
+            );
+        }
+      });
   };
   return (
     <div className="hero min-h-screen bg-base-200 py-20">
@@ -192,13 +212,13 @@ const Registration = () => {
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
-                  Image URL<span className="text-[#D8864B]">*</span>
+                  Image <span className="text-[#D8864B]">*</span>
                 </span>
               </label>
               <input
-                {...register("imageURL", { required: true })}
-                type="url"
-                placeholder="Image URL"
+                {...register("image", { required: true })}
+                type="file"
+                placeholder="Image"
                 className="input-primary"
                 required
               />

@@ -9,7 +9,7 @@ const Banner = () => {
   return (
     <>
       <Carousel>
-        <div className="relative flex justify-center items-center ">
+        <div className="relative flex justify-center items-center h-[600px]">
           <img src={banner1} />
           <div className="absolute md:px-20">
             <p className=" text-white text-6xl uppercase">
@@ -21,7 +21,7 @@ const Banner = () => {
           </div>
         </div>
 
-        <div className="relative flex justify-center items-center">
+        <div className="relative flex justify-center items-center h-[600px]">
           <img src={banner2} />
           <div className="absolute md:px-20">
             <p className=" text-white text-6xl uppercase">
@@ -33,7 +33,7 @@ const Banner = () => {
           </div>
         </div>
 
-        <div className="relative flex justify-center items-center">
+        <div className="relative flex justify-center items-center h-[600px]">
           <img src={banner3} />
           <div className="absolute md:px-20">
             <p className=" text-white text-6xl uppercase">
@@ -45,7 +45,7 @@ const Banner = () => {
           </div>
         </div>
 
-        <div className="relative flex justify-center items-center">
+        <div className="relative flex justify-center items-center h-[600px]">
           <img src={banner4} />
           <div className="absolute md:px-20">
             <p className=" text-white text-6xl uppercase">

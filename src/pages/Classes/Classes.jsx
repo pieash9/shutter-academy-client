@@ -7,7 +7,7 @@ const Classes = () => {
   const { data: allClass = [], isLoading: loading } = useQuery({
     queryKey: ["allClass"],
     queryFn: async () => {
-      const data = await axios(`http://localhost:5000/classes`);
+      const data = await axios(`http://localhost:5000/approvedClasses`);
       return data?.data;
     },
   });

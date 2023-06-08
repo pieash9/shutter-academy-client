@@ -3,6 +3,7 @@ import SectionTitle from "../../../components/Shared/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { toast } from "react-hot-toast";
+const image_hosting_token = import.meta.env.VITE_IMGBB_KEY;
 
 const AddClass = () => {
   const { user } = useAuth();
@@ -12,18 +13,33 @@ const AddClass = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
   const onSubmit = (data) => {
     console.log(data);
-    axiosSecure
-      .post(`/classes`, {
-        ...data,
-        status: "pending",
-        totalEnrolled: 0,
-        student: 0,
-      })
-      .then((res) => {
-        if (res.data.insertedId) {
-          toast.success("Class added successfully");
+
+    const formData = new FormData();
+    formData.append("image", data.classImage[0]);
+    fetch(img_hosting_url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgResponse) => {
+        if (imgResponse.success) {
+          const imgURL = imgResponse.data.display_url;
+          axiosSecure
+            .post(`/classes`, {
+              ...data,
+              status: "pending",
+              totalEnrolled: 0,
+              student: 0,
+              classImage: imgURL,
+            })
+            .then((res) => {
+              if (res.data.insertedId) {
+                toast.success("Class added successfully");
+              }
+            });
         }
       });
   };
@@ -48,9 +64,7 @@ const AddClass = () => {
                 className="input-primary"
               />
               {errors.className && (
-                <span className="text-warning mt-1">
-                  class name is required
-                </span>
+                <span className="text-warning mt-1">Name is required</span>
               )}
             </div>
 
@@ -63,14 +77,12 @@ const AddClass = () => {
               </label>
               <input
                 {...register("classImage", { required: true })}
-                type="url"
-                placeholder="Image URL"
+                type="file"
+                placeholder="Image"
                 className="input-primary"
               />
               {errors.className && (
-                <span className="text-warning mt-1">
-                  class image is required
-                </span>
+                <span className="text-warning mt-1">Image is required</span>
               )}
             </div>
           </div>
@@ -130,7 +142,7 @@ const AddClass = () => {
               )}
             </div>
 
-            {/* Class Image */}
+            {/* price */}
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">
@@ -140,7 +152,7 @@ const AddClass = () => {
               <input
                 {...register("price", { required: true })}
                 type="text"
-                placeholder="Image URL"
+                placeholder="Price"
                 className="input-primary"
               />
               {errors.price && (
@@ -151,7 +163,7 @@ const AddClass = () => {
             </div>
           </div>
           <div className="mx-auto text-center ">
-            <button type="submit" className="button-primary !py-2 mt-5  w-1/3">
+            <button type="submit" className="button-primary !py-2 mt-5  w-1/2">
               Add class
             </button>
           </div>

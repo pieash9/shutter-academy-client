@@ -18,7 +18,7 @@ const ClassCard = ({ item }) => {
           <h2 className="card-title">{className}</h2>
           <p className="">Instructor: {instructorName}</p>
           <p className="">Available Seats: {availableSeats}</p>
-          <p className="">Price: {price}</p>
+          <p className="">Price: ${price}</p>
           <button
             disabled={availableSeats === 0}
             className={`button-primary mt-4 ${
