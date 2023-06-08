@@ -5,14 +5,16 @@ import { useState } from "react";
 import GoogleLogin from "../Shared/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-hot-toast";
+import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 
 const Registration = () => {
   const [show, setShow] = useState(true);
   const [confShow, setconfShow] = useState(true);
   const [passErr, setPassErr] = useState("");
+  const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const from = location.state?.from?.pathName || "/";
   const { loading, setLoading, createUser, updateUserProfile } = useAuth();
 
@@ -29,12 +31,28 @@ const Registration = () => {
     }
     setPassErr("");
     console.log(data);
+    const userData = {
+      name: data.name,
+      email: data.email,
+      role: "student",
+      image: data.imageURL,
+      createdAt: new Date().toLocaleDateString(),
+    };
     createUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
         updateUserProfile(data.name, data.imageURL).then(() => {
-          toast.success("Registration Successful");
-          navigate(from, { replace: true });
+          //add user to db
+          axiosSecure
+            .post("/users", {
+              ...userData
+            })
+            .then((res) => {
+              if (res.data.insertedId) {
+                toast.success("Registration Successful");
+                navigate(from, { replace: true });
+              }
+            });
         });
       })
       .catch((err) => console.log(err));

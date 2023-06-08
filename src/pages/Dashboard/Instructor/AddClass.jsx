@@ -18,7 +18,8 @@ const AddClass = () => {
       .post(`/classes`, {
         ...data,
         status: "pending",
-        totalEnrolled:0,
+        totalEnrolled: 0,
+        student: 0,
       })
       .then((res) => {
         if (res.data.insertedId) {

@@ -34,7 +34,7 @@ const DashboardLayout = () => {
             <h3 className="text-2xl">{user?.displayName}</h3>
           </div>
 
-          <div className="divider"></div>
+          <div className="divider mx-5"></div>
           <ul className="menu p-4 w-80 h-full  text-base-content">
             {/* student  */}
             {role === "student" && (
