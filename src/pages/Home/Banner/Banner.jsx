@@ -7,7 +7,7 @@ import banner4 from "../../../assets/Banner/banner4.jpg";
 
 const Banner = () => {
   return (
-    <div>
+    <>
       <Carousel>
         <div className="relative flex justify-center items-center ">
           <img src={banner1} />
@@ -57,7 +57,7 @@ const Banner = () => {
           </div>
         </div>
       </Carousel>
-    </div>
+    </>
   );
 };
 
