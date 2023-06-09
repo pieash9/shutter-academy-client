@@ -4,20 +4,34 @@ import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import Loader from "../../../components/Shared/Loader";
 import { FaTrashAlt } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 const SelectedClass = () => {
   const { user } = useAuth();
   const [axiosSecure] = useAxiosSecure();
 
-  const { data: selectedClass = [], isLoading } = useQuery({
+  //get all selected class
+  const {
+    data: selectedClass = [],
+    refetch,
+    isLoading: classLoading,
+  } = useQuery({
     queryKey: ["selectedClass"],
     queryFn: async () => {
       const res = await axiosSecure(`/selectedClasses/${user?.email}`);
       return res?.data;
     },
   });
-  console.log(selectedClass);
-  if (isLoading) {
+  //delete a class form selected class
+  const handleDelete = async (id) => {
+    const res = await axiosSecure.delete(`/selectedClasses/${id}`);
+    if (res?.data?.deletedCount > 0) {
+      refetch();
+      toast.success("Class removed");
+    }
+  };
+
+  if (classLoading) {
     return <Loader />;
   }
   return (
@@ -66,7 +80,10 @@ const SelectedClass = () => {
                     <button className="btn btn-info btn-sm">Pay</button>
                   </th>
                   <th>
-                    <button className="btn btn-error btn-sm text-white">
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className="btn btn-error btn-sm text-white"
+                    >
                       <FaTrashAlt size={16} />
                     </button>
                   </th>
