@@ -5,6 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import Loader from "../../../components/Shared/Loader";
 import { FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const SelectedClass = () => {
   const { user } = useAuth();
@@ -77,7 +78,11 @@ const SelectedClass = () => {
                   </td>
                   <td>${item?.price}</td>
                   <th>
-                    <button className="btn btn-info btn-sm">Pay</button>
+                    <Link
+                      to={`/dashboard/student/selected-class/payment/${item._id}`}
+                    >
+                      <button className="btn btn-info btn-sm">Pay</button>
+                    </Link>
                   </th>
                   <th>
                     <button

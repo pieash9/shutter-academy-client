@@ -220,6 +220,7 @@ const Registration = () => {
                 type="file"
                 placeholder="Image"
                 className="input-primary"
+                accept="image/*"
                 required
               />
               {errors.image && (

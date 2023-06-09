@@ -80,6 +80,8 @@ const AddClass = () => {
                 type="file"
                 placeholder="Image"
                 className="input-primary"
+                accept="image/*"
+                
               />
               {errors.className && (
                 <span className="text-warning mt-1">Image is required</span>

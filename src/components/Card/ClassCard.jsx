@@ -5,8 +5,7 @@ import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 
 const ClassCard = ({ item }) => {
   const { user } = useAuth();
-  const { classImage, className, instructorName, availableSeats, price } =
-    item;
+  const { classImage, className, instructorName, availableSeats, price } = item;
   const [axiosSecure] = useAxiosSecure();
 
   // only student can select class

@@ -13,6 +13,10 @@ import AddClass from "../pages/Dashboard/Instructor/AddClass";
 import MyClasses from "../pages/Dashboard/Instructor/MyClasses";
 import Classes from "../pages/Classes/Classes";
 import Instructors from "../pages/Instructors/Instructors";
+import Payment from "../pages/Dashboard/Student/Payment/Payment";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(`${import.meta.env.VITE_PAYMENT_GATEWAY_PK}`);
 
 const router = createBrowserRouter([
   {
@@ -63,6 +67,15 @@ const router = createBrowserRouter([
       {
         path: "student/enrolled-class",
         element: <EnrolledClasses />,
+      },
+      //payment
+      {
+        path: "student/selected-class/payment/:id",
+        element: (
+          <Elements stripe={stripePromise}>
+            <Payment />
+          </Elements>
+        ),
       },
 
       //instructor
