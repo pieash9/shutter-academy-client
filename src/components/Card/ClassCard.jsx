@@ -1,7 +1,46 @@
 /* eslint-disable react/prop-types */
+import { toast } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
+import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 
 const ClassCard = ({ item }) => {
-  const { classImage, className, instructorName, availableSeats, price } = item;
+  const { user } = useAuth();
+  const { classImage, className, instructorName, availableSeats, price } =
+    item;
+  const [axiosSecure] = useAxiosSecure();
+
+  // only student can select class
+  const handleSelect = (item) => {
+    const {
+      _id,
+      classImage,
+      className,
+      instructorName,
+      availableSeats,
+      price,
+    } = item;
+    axiosSecure
+      .post("/selectedClasses", {
+        classId: _id,
+        classImage,
+        className,
+        instructorName,
+        availableSeats,
+        price,
+        studentInfo: {
+          name: user?.displayName,
+          email: user?.email,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          toast.success(
+            "Class booked successful. Visit dashboard for more info."
+          );
+        }
+      });
+  };
   return (
     <>
       <div
@@ -20,6 +59,7 @@ const ClassCard = ({ item }) => {
           <p className="">Available Seats: {availableSeats}</p>
           <p className="">Price: ${price}</p>
           <button
+            onClick={() => handleSelect(item)}
             disabled={availableSeats === 0}
             className={`button-primary mt-4 ${
               availableSeats == 0 ? "cursor-not-allowed " : ""

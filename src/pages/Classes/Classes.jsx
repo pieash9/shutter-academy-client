@@ -3,7 +3,11 @@ import SectionTitle from "../../components/Shared/SectionTitle";
 import { useQuery } from "@tanstack/react-query";
 import ClassCard from "../../components/Card/ClassCard";
 import Loader from "../../components/Shared/Loader";
+
+
+
 const Classes = () => {
+
   const { data: allClass = [], isLoading: loading } = useQuery({
     queryKey: ["allClass"],
     queryFn: async () => {
@@ -14,7 +18,9 @@ const Classes = () => {
   if (loading) {
     return <Loader />;
   }
-  console.log(allClass);
+  
+  
+
 
 //   Todo: disable button for instructor and admin if the user is not logged in, then tell the user to log in before selecting the course. 
   return (

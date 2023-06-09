@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
-  const role = "instructor";
+  const role = "student";
   const { user } = useAuth();
   const navLinkClassName = ({ isActive }) =>
     isActive
