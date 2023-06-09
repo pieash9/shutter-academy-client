@@ -6,6 +6,7 @@ import Loader from "../../../components/Shared/Loader";
 import { FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import EmptyState from "../../Shared/EmptyState";
 
 const SelectedClass = () => {
   const { user } = useAuth();
@@ -53,6 +54,7 @@ const SelectedClass = () => {
             </tr>
           </thead>
           <tbody>
+            
             {selectedClass &&
               selectedClass.length > 0 &&
               selectedClass.map((item, i) => (
@@ -96,6 +98,7 @@ const SelectedClass = () => {
               ))}
           </tbody>
         </table>
+        {selectedClass && selectedClass.length < 1 && <EmptyState heading={"No data"} subHeading={"You did not add any class"}/>}
       </div>
     </div>
   );

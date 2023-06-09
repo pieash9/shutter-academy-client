@@ -4,18 +4,19 @@ import "./Payment.css";
 import { useEffect, useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import { useAxiosSecure } from "../../../../hooks/useAxiosSecure";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const Payment = () => {
   const { id } = useParams();
-
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [axiosSecure] = useAxiosSecure();
+  const navigate = useNavigate()
 
   //get all selected class
   const { data: classData = [] } = useQuery({
@@ -25,14 +26,16 @@ const Payment = () => {
       return res?.data;
     },
   });
-console.log(classData)
+  console.log(classData);
   useEffect(() => {
     if (classData.price) {
-      axiosSecure.post("/create-payment-intent", {
-        price: classData.price,
-      }).then(res=>{
-        setClientSecret(res.data.clientSecret);
-      })
+      axiosSecure
+        .post("/create-payment-intent", {
+          price: classData.price,
+        })
+        .then((res) => {
+          setClientSecret(res.data.clientSecret);
+        });
     }
   }, [classData, axiosSecure]);
 
@@ -86,11 +89,35 @@ console.log(classData)
       setCardError("");
       console.log("[paymentIntent]", paymentIntent);
       if (paymentIntent.status === "succeeded") {
+        const {
+          classId,
+          _id,
+          classImage,
+          studentInfo,
+          instructorName,
+          className,
+        } = classData;
         const paymentInfo = {
-          ...classData,
+          classId,
+          classImage,
+          selectedClassId: _id,
+          studentInfo,
+          instructorName,
+          className,
           transactionId: paymentIntent.id,
           date: new Date(),
         };
+        axiosSecure.post("/payment", { ...paymentInfo }).then((res) => {
+          console.log(res?.data);
+          if (res?.data.insertedId) {
+            axiosSecure.delete(`/selectedClasses/${_id}`).then((res) => {
+              if (res?.data?.deletedCount > 0) {
+                toast.success("Payment Success");
+                navigate("/dashboard/student/selected-class")
+              }
+            });
+          }
+        });
       }
     }
   };
