@@ -24,7 +24,7 @@ const EnrolledClasses = () => {
   return (
     <div>
       <SectionTitle heading={"My enrolled classes"} />
-      <div>
+      <>
         <div className="overflow-x-auto mt-10">
           <table className="table">
             {/* head */}
@@ -76,7 +76,7 @@ const EnrolledClasses = () => {
             />
           )}
         </div>
-      </div>
+      </>
     </div>
   );
 };
