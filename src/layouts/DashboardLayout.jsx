@@ -1,6 +1,9 @@
 import { FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { BiSelectMultiple } from "react-icons/bi";
+import { SiGoogleclassroom } from "react-icons/si";
+import { MdPayments } from "react-icons/md";
 
 const DashboardLayout = () => {
   const role = "student";
@@ -28,7 +31,7 @@ const DashboardLayout = () => {
           <div className="flex items-center mt-5 gap-3 md:mx-8">
             <img
               className="w-14 border-2 border-[#D8864B] rounded-full"
-              src={user?.photoURL}
+              src={user?.photoURL || "https://i.ibb.co/fSHmDMK/image.png"}
               alt=""
             />
             <h3 className="text-2xl">{user?.displayName}</h3>
@@ -45,6 +48,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="student/selected-class"
                   >
+                    <BiSelectMultiple />
                     My Selected Classes
                   </NavLink>
                 </li>
@@ -54,7 +58,18 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="student/enrolled-class"
                   >
+                    <SiGoogleclassroom />
                     My Enrolled Classes
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className={navLinkClassName}
+                    style={{ backgroundColor: "transparent" }}
+                    to="student/payment-history"
+                  >
+                    <MdPayments />
+                    Payment History
                   </NavLink>
                 </li>
               </>

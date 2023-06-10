@@ -16,6 +16,7 @@ import Instructors from "../pages/Instructors/Instructors";
 import Payment from "../pages/Dashboard/Student/Payment/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import PaymentHistory from "../pages/Dashboard/Student/PaymentHistory";
 const stripePromise = loadStripe(`${import.meta.env.VITE_PAYMENT_GATEWAY_PK}`);
 
 const router = createBrowserRouter([
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "student/enrolled-class",
         element: <EnrolledClasses />,
+      },
+      {
+        path: "student/payment-history",
+        element: <PaymentHistory />,
       },
       //payment
       {
