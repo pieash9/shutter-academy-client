@@ -61,10 +61,9 @@ const ClassCard = ({ item }) => {
           <p className="">Price: ${price}</p>
           <button
             onClick={() => handleSelect(item)}
-            disabled={availableSeats === 0}
-            className={`button-primary mt-4 ${
-              availableSeats == 0 ? "cursor-not-allowed " : ""
-            }`}
+            // todo: make this button disabled when role is admin or instructor
+            disabled={availableSeats === 0 }
+            className={`button-primary mt-4 `}
           >
             Select
           </button>

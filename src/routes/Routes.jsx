@@ -17,6 +17,8 @@ import Payment from "../pages/Dashboard/Student/Payment/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentHistory from "../pages/Dashboard/Student/PaymentHistory";
+import ManageClasses from "../pages/Dashboard/Admin/ManageClasses";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 const stripePromise = loadStripe(`${import.meta.env.VITE_PAYMENT_GATEWAY_PK}`);
 
 const router = createBrowserRouter([
@@ -94,6 +96,14 @@ const router = createBrowserRouter([
       },
 
       //admin
+      {
+        path: "admin/manage-classes",
+        element: <ManageClasses />,
+      },
+      {
+        path: "admin/manage-users",
+        element: <ManageUsers />,
+      },
     ],
   },
 ]);

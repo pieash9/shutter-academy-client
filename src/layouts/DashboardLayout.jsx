@@ -1,12 +1,13 @@
-import { FaHome } from "react-icons/fa";
+import { FaFolderPlus, FaHome, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { BiSelectMultiple } from "react-icons/bi";
 import { SiGoogleclassroom } from "react-icons/si";
-import { MdPayments } from "react-icons/md";
+import { MdClass, MdPayments } from "react-icons/md";
+
 
 const DashboardLayout = () => {
-  const role = "student";
+  const role = "admin";
   const { user } = useAuth();
   const navLinkClassName = ({ isActive }) =>
     isActive
@@ -58,7 +59,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="student/enrolled-class"
                   >
-                    <SiGoogleclassroom />
+                    <SiGoogleclassroom size={20}/>
                     My Enrolled Classes
                   </NavLink>
                 </li>
@@ -68,7 +69,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="student/payment-history"
                   >
-                    <MdPayments />
+                    <MdPayments size={20}/>
                     Payment History
                   </NavLink>
                 </li>
@@ -84,6 +85,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="instructor/add-class"
                   >
+                    <FaFolderPlus size={20}/>
                     Add a Class
                   </NavLink>
                 </li>
@@ -93,6 +95,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="instructor/my-classes"
                   >
+                    <SiGoogleclassroom size={20}/>
                     My Classes
                   </NavLink>
                 </li>
@@ -107,6 +110,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="admin/manage-classes"
                   >
+                    <MdClass size={20}/>
                     Manage Classes
                   </NavLink>
                 </li>
@@ -116,6 +120,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="admin/manage-users"
                   >
+                    <FaUsers size={20}/>
                     Manage Users
                   </NavLink>
                 </li>
@@ -130,7 +135,7 @@ const DashboardLayout = () => {
                 className={navLinkClassName}
                 style={{ backgroundColor: "transparent" }}
               >
-                <FaHome /> Home
+                <FaHome size={20}/> Home
               </NavLink>
             </li>
           </ul>
