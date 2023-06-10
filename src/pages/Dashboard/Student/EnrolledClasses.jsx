@@ -25,8 +25,6 @@ const EnrolledClasses = () => {
     <div>
       <SectionTitle heading={"My enrolled classes"} />
       <div>
-        <SectionTitle heading={"My selected class"} />
-
         <div className="overflow-x-auto mt-10">
           <table className="table">
             {/* head */}
@@ -64,7 +62,7 @@ const EnrolledClasses = () => {
                     </td>
                     <td>
                       <button className="btn btn-sm btn-info capitalize ">
-                        View Class
+                        Continue to class
                       </button>
                     </td>
                   </tr>

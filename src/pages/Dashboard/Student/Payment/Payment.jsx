@@ -7,6 +7,7 @@ import { useAxiosSecure } from "../../../../hooks/useAxiosSecure";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { FaSpinner } from "react-icons/fa";
 
 const Payment = () => {
   const { id } = useParams();
@@ -16,7 +17,8 @@ const Payment = () => {
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [axiosSecure] = useAxiosSecure();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [btnLoading, setBtnLoading] = useState(false);
 
   //get all selected class
   const { data: classData = [] } = useQuery({
@@ -40,12 +42,14 @@ const Payment = () => {
   }, [classData, axiosSecure]);
 
   const handleSubmit = async (event) => {
+    setBtnLoading(true);
     // Block native form submission.
     event.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
+      setBtnLoading(false);
       return;
     }
 
@@ -55,6 +59,7 @@ const Payment = () => {
     const card = elements.getElement(CardElement);
 
     if (card == null) {
+      setBtnLoading(false);
       return;
     }
 
@@ -65,6 +70,7 @@ const Payment = () => {
     });
 
     if (error) {
+      setBtnLoading(false);
       setCardError(error.message);
     } else {
       setCardError("");
@@ -84,6 +90,7 @@ const Payment = () => {
       });
 
     if (confirmError) {
+      setBtnLoading(false);
       setCardError(confirmError.message);
     } else {
       setCardError("");
@@ -112,8 +119,16 @@ const Payment = () => {
           if (res?.data.insertedId) {
             axiosSecure.delete(`/selectedClasses/${_id}`).then((res) => {
               if (res?.data?.deletedCount > 0) {
-                toast.success("Payment Success");
-                navigate("/dashboard/student/selected-class")
+                axiosSecure
+                  .patch(`/classes/${classData?.classId}`)
+                  .then((res) => {
+                    console.log(res?.data);
+                    if (res?.data.modifiedCount > 0) {
+                      toast.success("Payment Success");
+                      setBtnLoading(false);
+                      navigate("/dashboard/student/selected-class");
+                    }
+                  });
               }
             });
           }
@@ -148,10 +163,18 @@ const Payment = () => {
         {cardError && <p className="text-red-500 my-2">{cardError}</p>}
         <button
           type="submit"
-          className="button-primary !py-1 !px-5"
-          disabled={!stripe}
+          className={`button-primary !py-1 !px-5 ${
+            btnLoading ? "cursor-not-allowed " : ""
+          }`}
+          disabled={!stripe || btnLoading}
         >
-          Pay
+          {!btnLoading ? (
+            "Pay"
+          ) : (
+            <p className="animate-spin py-[2px] !px-[6px]">
+              <FaSpinner size={20} />
+            </p>
+          )}
         </button>
       </form>
     </>

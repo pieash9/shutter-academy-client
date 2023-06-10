@@ -6,7 +6,7 @@
 
 @layer components {
   .button-primary {
-    @apply px-4 py-2 rounded focus:outline-none transform transition-all duration-300 bg-gradient-to-r from-[#CD684A] via-[#D8864B] to-[#E9B84C] hover:bg-gradient-to-r hover:from-[#E9B84C] hover:via-[#D8864B] hover:to-[#CD684A] text-white;
+    @apply px-4 py-2 rounded focus:outline-none transform transition-all duration-300 bg-gradient-to-r from-[#CD684A] via-[#D8864B] to-[#E9B84C] hover:bg-gradient-to-r hover:from-[#E9B84C] hover:via-[#D8864B] hover:to-[#CD684A] text-white disabled:opacity-60 disabled:cursor-not-allowed;
   }
 }
 @layer components {

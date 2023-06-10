@@ -7,6 +7,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import EmptyState from "../../Shared/EmptyState";
+import Swal from "sweetalert2";
 
 const SelectedClass = () => {
   const { user } = useAuth();
@@ -26,11 +27,23 @@ const SelectedClass = () => {
   });
   //delete a class form selected class
   const handleDelete = async (id) => {
-    const res = await axiosSecure.delete(`/selectedClasses/${id}`);
-    if (res?.data?.deletedCount > 0) {
-      refetch();
-      toast.success("Class removed");
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/selectedClasses/${id}`);
+        if (res?.data?.deletedCount > 0) {
+          refetch();
+          toast.success("Class removed");
+        }
+      }
+    });
   };
 
   if (classLoading) {
@@ -54,7 +67,6 @@ const SelectedClass = () => {
             </tr>
           </thead>
           <tbody>
-            
             {selectedClass &&
               selectedClass.length > 0 &&
               selectedClass.map((item, i) => (
@@ -98,7 +110,12 @@ const SelectedClass = () => {
               ))}
           </tbody>
         </table>
-        {selectedClass && selectedClass.length < 1 && <EmptyState heading={"No data"} subHeading={"You did not add any class"}/>}
+        {selectedClass && selectedClass.length < 1 && (
+          <EmptyState
+            heading={"No data"}
+            subHeading={"You did not add any class"}
+          />
+        )}
       </div>
     </div>
   );

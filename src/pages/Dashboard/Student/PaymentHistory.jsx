@@ -68,7 +68,11 @@ const PaymentHistory = () => {
                         {`${new Date(item?.date).toLocaleTimeString([], {
                           hour: "numeric",
                           minute: "numeric",
-                        })} ${new Date(item?.date).toLocaleDateString()} `}
+                        })} ${new Date(item?.date).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })} `}
                       </p>
                     </td>
                   </tr>

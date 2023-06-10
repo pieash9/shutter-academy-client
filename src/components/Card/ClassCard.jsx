@@ -32,11 +32,8 @@ const ClassCard = ({ item }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.insertedId) {
-          toast.success(
-            "Class booked successful. Visit dashboard for more info."
-          );
+          toast.success("Class added. Visit dashboard for more info.");
         }
       });
   };
@@ -44,9 +41,14 @@ const ClassCard = ({ item }) => {
     <>
       <div
         className={`card ${
-          availableSeats == 0 ? "bg-red-500" : "bg-base-200"
+          availableSeats == 0 ? "bg-red-500" : "bg-base-300"
         }  shadow-xl `}
       >
+        {availableSeats == 0 && (
+          <div className="badge badge-warning absolute -right-2 -top-2">
+            No seat Available
+          </div>
+        )}
         <div className="card-body">
           <img
             src={classImage}

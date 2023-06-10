@@ -4,10 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import ClassCard from "../../components/Card/ClassCard";
 import Loader from "../../components/Shared/Loader";
 
-
-
 const Classes = () => {
-
   const { data: allClass = [], isLoading: loading } = useQuery({
     queryKey: ["allClass"],
     queryFn: async () => {
@@ -18,11 +15,8 @@ const Classes = () => {
   if (loading) {
     return <Loader />;
   }
-  
-  
 
-
-//   Todo: disable button for instructor and admin if the user is not logged in, then tell the user to log in before selecting the course. 
+  //   Todo: disable button for instructor and admin if the user is not logged in, then tell the user to log in before selecting the course.
   return (
     <div className="mt-5">
       <SectionTitle
@@ -30,7 +24,7 @@ const Classes = () => {
         subHeading={"Enhance Your Skills with Our Photography Classes"}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-16">
         {allClass.map((item) => (
           <ClassCard key={item._id} item={item} />
         ))}
