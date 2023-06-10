@@ -2,17 +2,22 @@ import { toast } from "react-hot-toast";
 import SectionTitle from "../../../components/Shared/SectionTitle";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import FeedbackModal from "../../../components/Modal/FeedbackModal";
 
 const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
-  const { data: allClassesData = [], refetch,isLoading  } = useQuery({
+  const {
+    data: allClassesData = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["allClassesData"],
     queryFn: async () => {
       const res = await axiosSecure("/classes");
       return res?.data;
     },
   });
-
+  // to handle class status approve,denied
   const handleClassStatus = async (id, status) => {
     const res = await axiosSecure.patch(`/updateClassStatus/${id}`, { status });
     if (res.data?.modifiedCount) {
@@ -24,10 +29,29 @@ const ManageClasses = () => {
       }
     }
   };
+
+
+
   return (
     <div>
       <SectionTitle heading={"Manage Classes"} />
       <>
+        <button className="btn" onClick={() => window.my_modal_3.showModal()}>
+          open modal
+        </button>
+        <dialog id="my_modal_3" className="modal">
+          <div className="modal-box">
+            <button
+              onClick={() => window.my_modal_3.close()}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
+            <h3 className="font-bold text-lg">Hello!</h3>
+            <p className="py-4">Press ESC key or click on ✕ button to close</p>
+          </div>
+        </dialog>
+
         <div className="overflow-x-auto my-10 ">
           <table className="table table-sm">
             <thead className="bg-base-300">
@@ -75,7 +99,7 @@ const ManageClasses = () => {
                     <td>{classData?.availableSeats}</td>
                     <td>${classData?.price}</td>
                     <td>
-                      <td className="text-center flex justify-center">
+                      <div className="text-center flex justify-center">
                         <small
                           className={`text-center font-medium py-1 px-2 text-gray-600 rounded-md ${
                             classData?.status === "approved"
@@ -89,14 +113,15 @@ const ManageClasses = () => {
                         >
                           {classData?.status}
                         </small>
-                      </td>
+                      </div>
                     </td>
                     <td>
                       <div className="join join-vertical gap-1 ">
                         <button
                           disabled={
                             classData?.status === "approved" ||
-                            classData?.status === "denied" ||isLoading
+                            classData?.status === "denied" ||
+                            isLoading
                           }
                           onClick={() =>
                             handleClassStatus(classData?._id, "approved")
@@ -108,7 +133,8 @@ const ManageClasses = () => {
                         <button
                           disabled={
                             classData?.status === "approved" ||
-                            classData?.status === "denied" ||isLoading
+                            classData?.status === "denied" ||
+                            isLoading
                           }
                           onClick={() =>
                             handleClassStatus(classData?._id, "denied")
@@ -117,8 +143,12 @@ const ManageClasses = () => {
                         >
                           Deny
                         </button>
-                        <button className="  btn btn-warning btn-xs ">
+                        <button
+                          onClick={() => window.my_modal_3.showModal()}
+                          className="  btn btn-warning btn-xs "
+                        >
                           <span>Send FeedBack</span>
+                          <FeedbackModal id="my_modal_3" />
                         </button>
                       </div>
                     </td>
