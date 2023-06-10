@@ -1,27 +1,39 @@
+import { toast } from "react-hot-toast";
 import SectionTitle from "../../../components/Shared/SectionTitle";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
 const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
-  const { data: allClassesData = [] } = useQuery({
+  const { data: allClassesData = [], refetch,isLoading  } = useQuery({
     queryKey: ["allClassesData"],
     queryFn: async () => {
       const res = await axiosSecure("/classes");
       return res?.data;
     },
   });
-  console.log(allClassesData);
+
+  const handleClassStatus = async (id, status) => {
+    const res = await axiosSecure.patch(`/updateClassStatus/${id}`, { status });
+    if (res.data?.modifiedCount) {
+      refetch();
+      if (status == "approved") {
+        toast.success(`Class ${status}`);
+      } else {
+        toast.error(`Class ${status}`);
+      }
+    }
+  };
   return (
     <div>
       <SectionTitle heading={"Manage Classes"} />
       <>
-        <div className="overflow-x-auto my-10 max-w-4xl">
+        <div className="overflow-x-auto my-10 ">
           <table className="table table-sm">
             <thead className="bg-base-300">
               <tr>
                 <th>#</th>
-                <th>Name</th>
+                <th>Class Name</th>
                 <th>Instructor name</th>
                 <th> Instructor email</th>
                 <th>Available seats</th>
@@ -55,23 +67,23 @@ const ManageClasses = () => {
                     </td>
                     <td>{classData?.instructorName}</td>
                     <td
-                      className="tooltip mt-5"
+                      className="tooltip mt-8"
                       data-tip={classData?.instructorEmail}
                     >
-                      {classData?.instructorEmail.slice(0, 10)}...
+                      <p>{classData?.instructorEmail.slice(0, 10)}...</p>
                     </td>
                     <td>{classData?.availableSeats}</td>
                     <td>${classData?.price}</td>
                     <td>
-                      <td className="text-center">
+                      <td className="text-center flex justify-center">
                         <small
                           className={`text-center font-medium py-1 px-2 text-gray-600 rounded-md ${
                             classData?.status === "approved"
-                              ? " bg-green-400  "
+                              ? " bg-green-400  text-white"
                               : classData?.status === "pending"
-                              ? "bg-yellow-400 "
+                              ? "bg-yellow-400 text-white"
                               : classData?.status === "denied"
-                              ? "bg-red-500"
+                              ? "bg-red-500 text-white"
                               : "bg-transparent"
                           }`}
                         >
@@ -80,13 +92,33 @@ const ManageClasses = () => {
                       </td>
                     </td>
                     <td>
-                      <div className="join join-vertical gap-2">
-                        <button className="$btn join-item btn btn-success btn-xs">
+                      <div className="join join-vertical gap-1 ">
+                        <button
+                          disabled={
+                            classData?.status === "approved" ||
+                            classData?.status === "denied" ||isLoading
+                          }
+                          onClick={() =>
+                            handleClassStatus(classData?._id, "approved")
+                          }
+                          className="  btn btn-success btn-xs"
+                        >
                           Approve
                         </button>
-                        <button className="$btn join-item btn btn-error btn-xs">Deny</button>
-                        <button className="$btn join-item btn btn-warning btn-xs ">
-                          Send FeedBack
+                        <button
+                          disabled={
+                            classData?.status === "approved" ||
+                            classData?.status === "denied" ||isLoading
+                          }
+                          onClick={() =>
+                            handleClassStatus(classData?._id, "denied")
+                          }
+                          className="  btn btn-error btn-xs "
+                        >
+                          Deny
+                        </button>
+                        <button className="  btn btn-warning btn-xs ">
+                          <span>Send FeedBack</span>
                         </button>
                       </div>
                     </td>
