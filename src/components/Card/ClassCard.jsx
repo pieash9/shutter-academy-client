@@ -5,7 +5,7 @@ import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 
 const ClassCard = ({ item }) => {
   const { user } = useAuth();
-  const { classImage, className, instructorName, availableSeats, price } = item;
+  const { classImage, className, instructorName, availableSeats, price,totalEnrolled } = item;
   const [axiosSecure] = useAxiosSecure();
 
   // only student can select class
@@ -17,6 +17,7 @@ const ClassCard = ({ item }) => {
       instructorName,
       availableSeats,
       price,
+      
     } = item;
     axiosSecure
       .post("/selectedClasses", {
@@ -58,6 +59,7 @@ const ClassCard = ({ item }) => {
           <h2 className="card-title">{className}</h2>
           <p className="">Instructor: {instructorName}</p>
           <p className="">Available Seats: {availableSeats}</p>
+          <p className="">Enrolled Student: {totalEnrolled}</p>
           <p className="">Price: ${price}</p>
           <button
             onClick={() => handleSelect(item)}

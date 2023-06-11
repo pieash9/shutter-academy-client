@@ -21,11 +21,15 @@ const Login = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    signIn(data.email, data.password).then((result) => {
-      console.log(result.user);
-      navigate(from, { replace: true });
-      toast.success("Login success");
-    });
+    signIn(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+        navigate(from, { replace: true });
+        toast.success("Login success");
+      })
+      .catch(() => {
+        toast.error("Incorrect password");
+      });
   };
   return (
     <div className="hero min-h-screen bg-base-200">

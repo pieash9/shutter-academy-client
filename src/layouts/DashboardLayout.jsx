@@ -4,11 +4,28 @@ import useAuth from "../hooks/useAuth";
 import { BiSelectMultiple } from "react-icons/bi";
 import { SiGoogleclassroom } from "react-icons/si";
 import { MdClass, MdPayments } from "react-icons/md";
-
+import { useAxiosSecure } from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../components/Shared/Loader";
 
 const DashboardLayout = () => {
-  const role = "admin";
+
   const { user } = useAuth();
+  const [axiosSecure] = useAxiosSecure();
+
+  //get user role
+  const { data: userRole = [], isLoading } = useQuery({
+    queryKey: ["userRole"],
+    queryFn: async () => {
+      const res = await axiosSecure(`/getUserRole/${user?.email}`);
+      return res?.data?.role;
+    },
+  });
+  console.log(userRole);
+  if (isLoading) {
+    return <Loader />;
+  }
+
   const navLinkClassName = ({ isActive }) =>
     isActive
       ? "text-[#D8864B] font-medium text-base"
@@ -41,7 +58,7 @@ const DashboardLayout = () => {
           <div className="divider mx-5"></div>
           <ul className="menu p-4 w-80 h-full  text-base-content">
             {/* student  */}
-            {role === "student" && (
+            {userRole === "student" && (
               <>
                 <li>
                   <NavLink
@@ -59,7 +76,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="student/enrolled-class"
                   >
-                    <SiGoogleclassroom size={20}/>
+                    <SiGoogleclassroom size={20} />
                     My Enrolled Classes
                   </NavLink>
                 </li>
@@ -69,7 +86,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="student/payment-history"
                   >
-                    <MdPayments size={20}/>
+                    <MdPayments size={20} />
                     Payment History
                   </NavLink>
                 </li>
@@ -77,7 +94,7 @@ const DashboardLayout = () => {
             )}
 
             {/* instructor  */}
-            {role === "instructor" && (
+            {userRole === "instructor" && (
               <>
                 <li>
                   <NavLink
@@ -85,7 +102,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="instructor/add-class"
                   >
-                    <FaFolderPlus size={20}/>
+                    <FaFolderPlus size={20} />
                     Add a Class
                   </NavLink>
                 </li>
@@ -95,14 +112,14 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="instructor/my-classes"
                   >
-                    <SiGoogleclassroom size={20}/>
+                    <SiGoogleclassroom size={20} />
                     My Classes
                   </NavLink>
                 </li>
               </>
             )}
             {/* admin  */}
-            {role === "admin" && (
+            {userRole === "admin" && (
               <>
                 <li>
                   <NavLink
@@ -110,7 +127,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="admin/manage-classes"
                   >
-                    <MdClass size={20}/>
+                    <MdClass size={20} />
                     Manage Classes
                   </NavLink>
                 </li>
@@ -120,7 +137,7 @@ const DashboardLayout = () => {
                     style={{ backgroundColor: "transparent" }}
                     to="admin/manage-users"
                   >
-                    <FaUsers size={20}/>
+                    <FaUsers size={20} />
                     Manage Users
                   </NavLink>
                 </li>
@@ -135,7 +152,7 @@ const DashboardLayout = () => {
                 className={navLinkClassName}
                 style={{ backgroundColor: "transparent" }}
               >
-                <FaHome size={20}/> Home
+                <FaHome size={20} /> Home
               </NavLink>
             </li>
           </ul>

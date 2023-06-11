@@ -19,6 +19,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import PaymentHistory from "../pages/Dashboard/Student/PaymentHistory";
 import ManageClasses from "../pages/Dashboard/Admin/ManageClasses";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import AdminRoute from "./AdminRoute";
 const stripePromise = loadStripe(`${import.meta.env.VITE_PAYMENT_GATEWAY_PK}`);
 
 const router = createBrowserRouter([
@@ -98,11 +99,19 @@ const router = createBrowserRouter([
       //admin
       {
         path: "admin/manage-classes",
-        element: <ManageClasses />,
+        element: (
+          <AdminRoute>
+            <ManageClasses />
+          </AdminRoute>
+        ),
       },
       {
         path: "admin/manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
     ],
   },

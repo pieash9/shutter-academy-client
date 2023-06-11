@@ -8,6 +8,7 @@ import { useState } from "react";
 const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
   const [modalData, setModalData] = useState([]);
+  
   const {
     data: allClassesData = [],
     refetch,
