@@ -48,7 +48,7 @@ const ClassUpdateModal = ({ classData, refetch }) => {
     <dialog id="classUpdateModal" className="modal">
       <div className="modal-box max-w-5xl md:w-2/3">
         <div className="md:px-10 md:py-7">
-          <div className="mb-5 text-center text-gray-600 font-medium">
+          <div className="mb-5 text-center text-gray-800 font-medium">
             <h3 className="text-2xl">Update class</h3>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">

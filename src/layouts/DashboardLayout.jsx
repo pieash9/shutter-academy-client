@@ -4,24 +4,26 @@ import useAuth from "../hooks/useAuth";
 import { BiSelectMultiple } from "react-icons/bi";
 import { SiGoogleclassroom } from "react-icons/si";
 import { MdClass, MdPayments } from "react-icons/md";
-import { useAxiosSecure } from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../components/Shared/Loader";
+import axios from "axios";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
-
   const { user } = useAuth();
-  const [axiosSecure] = useAxiosSecure();
+
+  const { role } = useRole();
 
   //get user role
   const { data: userRole = [], isLoading } = useQuery({
     queryKey: ["userRole"],
     queryFn: async () => {
-      const res = await axiosSecure(`/getUserRole/${user?.email}`);
-      return res?.data?.role;
+      const res = await axios.get(
+        `https://shutter-academy-server.vercel.app/getUserRole/${user?.email}`
+      );
+      return res?.data?.role || "";
     },
   });
-  console.log(userRole);
   if (isLoading) {
     return <Loader />;
   }
@@ -45,7 +47,9 @@ const DashboardLayout = () => {
         </div>
         <div className="drawer-side bg-base-200">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-
+          <h3 className="font-medium pt-10 md:mx-8 mb-3 text-gray-600 text-2xl capitalize">
+            {role} Portal
+          </h3>
           <div className="flex items-center mt-5 gap-3 md:mx-8">
             <img
               className="w-14 border-2 border-[#D8864B] rounded-full"
@@ -56,8 +60,8 @@ const DashboardLayout = () => {
           </div>
 
           <div className="divider mx-5"></div>
-          <ul className="menu p-4 w-80 h-full  text-base-content">
-            {/* student  */}
+          <ul className="menu p-4 w-80 h-full text-base-content">
+            {/* student */}
             {userRole === "student" && (
               <>
                 <li>
@@ -93,7 +97,7 @@ const DashboardLayout = () => {
               </>
             )}
 
-            {/* instructor  */}
+            {/* instructor */}
             {userRole === "instructor" && (
               <>
                 <li>
@@ -118,7 +122,7 @@ const DashboardLayout = () => {
                 </li>
               </>
             )}
-            {/* admin  */}
+            {/* admin */}
             {userRole === "admin" && (
               <>
                 <li>
@@ -157,6 +161,11 @@ const DashboardLayout = () => {
             </li>
           </ul>
         </div>
+        <label htmlFor="my-drawer-2" className="drawer-button-mobile">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
       </div>
     </div>
   );

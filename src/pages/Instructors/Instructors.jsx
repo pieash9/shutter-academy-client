@@ -8,7 +8,9 @@ const Instructors = () => {
   const { data: instructors = [], isLoading: loading } = useQuery({
     queryKey: ["instructors"],
     queryFn: async () => {
-      const data = await axios(`http://localhost:5000/instructors`);
+      const data = await axios(
+        `https://shutter-academy-server.vercel.app/instructors`
+      );
       return data?.data;
     },
   });
@@ -17,7 +19,7 @@ const Instructors = () => {
   }
   console.log(instructors);
   return (
-    <div className="mt-5">
+    <div className="mt-5 px-3">
       <SectionTitle
         heading={"Meet our instructors"}
         subHeading={

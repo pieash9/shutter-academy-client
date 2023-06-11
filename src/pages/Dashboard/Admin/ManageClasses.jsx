@@ -8,7 +8,7 @@ import { useState } from "react";
 const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
   const [modalData, setModalData] = useState([]);
-  
+
   const {
     data: allClassesData = [],
     refetch,
@@ -90,7 +90,7 @@ const ManageClasses = () => {
                     <td>
                       <div className="text-center flex justify-center">
                         <small
-                          className={`text-center font-medium py-1 px-2 text-gray-600 rounded-md ${
+                          className={`text-center font-medium py-1 px-2 text-gray-800 rounded-md ${
                             classData?.status === "approved"
                               ? " bg-green-400  text-white"
                               : classData?.status === "pending"
@@ -137,7 +137,11 @@ const ManageClasses = () => {
                           onClick={() => handleFeedbackModal(classData)}
                           className="  btn btn-warning btn-xs "
                         >
-                          <span>{classData?.feedback ?"Already feedback" :"Send FeedBack"}</span>
+                          <span>
+                            {classData?.feedback
+                              ? "Already feedback"
+                              : "Send FeedBack"}
+                          </span>
                         </button>
                       </div>
                     </td>

@@ -8,7 +8,6 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import SelectedClass from "../pages/Dashboard/Student/SelectedClass";
 import EnrolledClasses from "../pages/Dashboard/Student/EnrolledClasses";
 import PrivateRoute from "./PrivateRoute";
-import Dashboard from "../pages/Dashboard/Dashboard";
 import AddClass from "../pages/Dashboard/Instructor/AddClass";
 import MyClasses from "../pages/Dashboard/Instructor/MyClasses";
 import Classes from "../pages/Classes/Classes";
@@ -21,6 +20,7 @@ import ManageClasses from "../pages/Dashboard/Admin/ManageClasses";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import AdminRoute from "./AdminRoute";
 const stripePromise = loadStripe(`${import.meta.env.VITE_PAYMENT_GATEWAY_PK}`);
+
 
 const router = createBrowserRouter([
   {
@@ -59,10 +59,7 @@ const router = createBrowserRouter([
     ),
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: "/dashboard",
-        element: <Dashboard />,
-      },
+    
       // student
       {
         path: "student/selected-class",

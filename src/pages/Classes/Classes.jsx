@@ -8,7 +8,9 @@ const Classes = () => {
   const { data: allClass = [], isLoading: loading } = useQuery({
     queryKey: ["allClass"],
     queryFn: async () => {
-      const data = await axios(`http://localhost:5000/approvedClasses`);
+      const data = await axios(
+        `https://shutter-academy-server.vercel.app/approvedClasses`
+      );
       return data?.data;
     },
   });
@@ -16,9 +18,8 @@ const Classes = () => {
     return <Loader />;
   }
 
-  //   Todo: disable button for instructor and admin if the user is not logged in, then tell the user to log in before selecting the course.
   return (
-    <div className="mt-5">
+    <div className="mt-5 px-3">
       <SectionTitle
         heading={"All Classes"}
         subHeading={"Enhance Your Skills with Our Photography Classes"}

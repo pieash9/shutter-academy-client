@@ -16,19 +16,19 @@ const ManageClassCard = ({ classData }) => {
         <img src={classImage} alt="Class" className="w-full" />
         <div className="px-6 py-4">
           <h3 className="font-bold text-xl mb-2">{className}</h3>
-          <p className="text-gray-700 mb-2">
+          <p className="text-gray-800 mb-2">
             <span className="font-bold">Instructor:</span>
           </p>
-          <p className="text-gray-700 mb-2">
+          <p className="text-gray-800 mb-2">
             <span className="font-bold">Email:</span>
           </p>
-          <p className="text-gray-700 mb-2">
+          <p className="text-gray-800 mb-2">
             <span className="font-bold">Available Seats:</span>
           </p>
-          <p className="text-gray-700 mb-2">
+          <p className="text-gray-800 mb-2">
             <span className="font-bold">Price:</span>
           </p>
-          <p className="text-gray-700 mb-2">
+          <p className="text-gray-800 mb-2">
             <span className="font-bold">Status:</span> {status}
           </p>
         </div>

@@ -1,17 +1,15 @@
-
 import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300 py-10">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="">
-            <img
-              src={logo}
-              alt="Logo"
-              className="w-72 mr-2 bg-slate-300 rounded-md"
-            />
+        <div className="flex flex-col md:flex-row md:items-center justify-between">
+          <div className="flex items-center">
+            <img src={logo} alt="Logo" className="md:w-20 w-16 mr-2 rounded-md" />
+            <h3 className="text-2xl md:text-3xl font-semibold text-gray-300">
+              Shutter Academy
+            </h3>
           </div>
           <div className="mt-4 md:mt-0">
             <h4 className="text-white font-bold mb-2">Contact</h4>
@@ -33,11 +31,19 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <hr className="mt-8 border-gray-800" />
+        <hr className="mt-8 border-gray-500" />
         <div className="mt-8 text-center">
           <p className="text-gray-500">
-            &copy; {new Date().getFullYear()} Shutter Academy. All rights
-            reserved.
+            &copy; {new Date().getFullYear()}{" "}
+            <a
+              className="link-hover font-medium text-[#D8864B]"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/pieash9"
+            >
+              @pieash9
+            </a>{" "}
+            . All rights reserved.
           </p>
         </div>
       </div>

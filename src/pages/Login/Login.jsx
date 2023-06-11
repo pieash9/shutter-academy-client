@@ -71,12 +71,12 @@ const Login = () => {
                   {show ? (
                     <FaEyeSlash
                       onClick={() => setShow(!show)}
-                      className="w-5 h-5 text-gray-500"
+                      className="w-5 h-5 text-gray-800"
                     />
                   ) : (
                     <FaEye
                       onClick={() => setShow(!show)}
-                      className="w-5 h-5 text-gray-500"
+                      className="w-5 h-5 text-gray-800"
                     />
                   )}
                 </div>

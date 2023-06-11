@@ -33,26 +33,33 @@ const Courses = () => {
     },
   ];
   return (
-    <div>
+    <div className="mx-3">
       <SectionTitle
         heading={"Our Courses and Books"}
         subHeading={"Unlock Your Potential with Our Courses and Books"}
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
         {coursesBook.map((course) => (
-          <div key={course.name} className="card w-96 bg-base-100 shadow-2xl group">
+          <div
+            key={course.name}
+            className="card   shadow-2xl group bg-white"
+          >
             <figure>
               <img
-              className="rounded-t-sm w-full group-hover:scale-105 transition-all duration-500"
+                className="rounded-t-sm w-full group-hover:scale-105 transition-all duration-500"
                 src={course.image}
                 alt="course photo"
               />
             </figure>
             <div className="px-5 py-5">
-              <h2 className="text-gray-700 text-lg font-medium text-center">{course.name}</h2>
-              
+              <h2 className="text-gray-800 text-lg font-medium text-center">
+                {course.name}
+              </h2>
+
               <div className="card-actions mt-3 ">
-                <button className="button-primary !py-1 w-3/4 mx-auto rounded-full">Preview & More Info</button>
+                <button className="button-primary !py-1 w-3/4 mx-auto rounded-full">
+                  Preview & More Info
+                </button>
               </div>
             </div>
           </div>

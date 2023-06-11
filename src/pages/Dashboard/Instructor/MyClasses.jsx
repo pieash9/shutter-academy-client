@@ -13,7 +13,11 @@ const MyClasses = () => {
   const [axiosSecure] = useAxiosSecure();
   const [classData, setClassData] = useState(null);
 
-  const { data: myClasses = [], isLoading,refetch } = useQuery({
+  const {
+    data: myClasses = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["myClasses"],
     queryFn: async () => {
       const res = await axiosSecure(`/instructorClasses/${user?.email}`);
@@ -29,23 +33,6 @@ const MyClasses = () => {
 
   return (
     <div>
-      <button className="btn" onClick={() => window.my_modal_1.showModal()}>
-        Open modal
-      </button>
-
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">
-            Press ESC key or click the button below to close
-          </p>
-          <div className="modal-action">
-            <button className="btn" onClick={() => window.my_modal_1.close()}>
-              Close
-            </button>
-          </div>
-        </div>
-      </dialog>
       {isLoading && <Loader />}
       <SectionTitle heading={"My classes"} />
       <div className="overflow-x-auto mt-10">
@@ -90,7 +77,7 @@ const MyClasses = () => {
                   <td>${item?.price}</td>
                   <td className="text-center">
                     <small
-                      className={`text-center font-medium py-1 px-2 text-gray-600 rounded-md ${
+                      className={`text-center font-medium py-1 px-2 text-gray-800 rounded-md ${
                         item?.status === "approved"
                           ? " bg-green-400  "
                           : item?.status === "pending"

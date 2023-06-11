@@ -137,7 +137,7 @@ const Registration = () => {
                   placeholder="Your Password"
                   className="input-primary"
                 />
-                <small className="text-gray-500">
+                <small className="text-gray-800">
                   Password should be at least 6 characters long, include minimum
                   one special character and one capital letter.
                 </small>
@@ -146,12 +146,12 @@ const Registration = () => {
                   {show ? (
                     <FaEyeSlash
                       onClick={() => setShow(!show)}
-                      className="w-5 h-5 text-gray-500"
+                      className="w-5 h-5 text-gray-800"
                     />
                   ) : (
                     <FaEye
                       onClick={() => setShow(!show)}
-                      className="w-5 h-5 text-gray-500"
+                      className="w-5 h-5 text-gray-800"
                     />
                   )}
                 </div>
@@ -192,12 +192,12 @@ const Registration = () => {
                   {confShow ? (
                     <FaEyeSlash
                       onClick={() => setconfShow(!confShow)}
-                      className="w-5 h-5 text-gray-500"
+                      className="w-5 h-5 text-gray-800"
                     />
                   ) : (
                     <FaEye
                       onClick={() => setconfShow(!confShow)}
-                      className="w-5 h-5 text-gray-500"
+                      className="w-5 h-5 text-gray-800"
                     />
                   )}
                 </div>

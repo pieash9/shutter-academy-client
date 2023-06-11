@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 export const AuthContext = createContext(null);
 
@@ -49,15 +50,23 @@ const AuthProvider = ({ children }) => {
       photoURL: photo,
     });
   };
-
- 
+  //get user role
+  const { data: userRole = [], isLoading: userRoleLoading } = useQuery({
+    queryKey: ["userRole"],
+    queryFn: async () => {
+      const res = await axios.get(
+        `https://shutter-academy-server.vercel.app/getUserRole/${user?.email}`
+      );
+      return res?.data?.role || "";
+    },
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser?.email) {
         axios
-          .post(`http://localhost:5000/jwt`, {
+          .post(`https://shutter-academy-server.vercel.app/jwt`, {
             email: currentUser?.email,
           })
           .then((data) => {
@@ -70,8 +79,6 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
       }
       console.log("current user", currentUser);
-
-      
     });
     return () => {
       return unsubscribe();
@@ -81,6 +88,8 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     loading,
+    userRole,
+    userRoleLoading,
     setLoading,
     createUser,
     signIn,

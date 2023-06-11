@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../Shared/Loader";
+import axios from "axios";
 
 const ClassCard = ({ item, isLoading }) => {
   const { user } = useAuth();
@@ -16,17 +17,17 @@ const ClassCard = ({ item, isLoading }) => {
     totalEnrolled,
   } = item;
   const [axiosSecure] = useAxiosSecure();
-
   //get user role
-  const { data: userRole = [], isLoading: roleLoading } = useQuery({
+  const { data: userRole = [], isLoading: loading } = useQuery({
     queryKey: ["userRole"],
     queryFn: async () => {
-      const res = await axiosSecure(`/getUserRole/${user?.email}`);
-      return res?.data?.role;
+      const res = await axios.get(
+        `https://shutter-academy-server.vercel.app/getUserRole/${user?.email}`
+      );
+      return res?.data?.role || "";
     },
   });
-  console.log(roleLoading);
-  if (isLoading || isLoading) {
+  if (isLoading || loading) {
     return <Loader />;
   }
 
@@ -62,7 +63,7 @@ const ClassCard = ({ item, isLoading }) => {
   return (
     <>
       <div
-        className={`card ${
+        className={`card  ${
           availableSeats == 0 ? "bg-red-500" : "bg-base-300"
         }  shadow-xl `}
       >
@@ -71,7 +72,7 @@ const ClassCard = ({ item, isLoading }) => {
             No seat Available
           </div>
         )}
-        <div className="card-body">
+        <div className="card-body dark:text-white ">
           <img
             src={classImage}
             alt={className}
@@ -84,7 +85,6 @@ const ClassCard = ({ item, isLoading }) => {
           <p className="">Price: ${price}</p>
           <button
             onClick={() => handleSelect(item)}
-            // todo: make this button disabled when role is admin or instructor
             disabled={
               availableSeats === 0 ||
               userRole === "admin" ||

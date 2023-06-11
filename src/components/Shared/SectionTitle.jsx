@@ -2,9 +2,9 @@
 
 const SectionTitle = ({ heading, subHeading }) => {
   return (
-    <div className="text-center">
-      <h3 className="mb-2 text-3xl font-medium text-gray-700">{heading}</h3>
-      <p className="text-gray-600">{subHeading}</p>
+    <div className="text-center mb-10 ">
+      <h3 className="mb-2 text-3xl font-medium  ">{heading}</h3>
+      <p className="">{subHeading}</p>
     </div>
   );
 };

@@ -9,12 +9,13 @@ const PopularClasses = () => {
   const { data: popularClasses = [], isLoading } = useQuery({
     queryKey: ["popularClasses"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/allClasses");
+      const res = await axios.get(
+        "https://shutter-academy-server.vercel.app/allClasses"
+      );
       return res.data;
     },
   });
 
-  
   //  framer motion
   const container = {
     hidden: { opacity: 1, scale: 0 },
@@ -23,10 +24,10 @@ const PopularClasses = () => {
       scale: 1,
       transition: {
         delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  }
+        staggerChildren: 0.2,
+      },
+    },
+  };
   const cardVariants = {
     hidden: {
       opacity: 0,
@@ -42,7 +43,7 @@ const PopularClasses = () => {
   };
 
   return (
-    <div>
+    <div className="px-3">
       <SectionTitle
         heading={"Popular Classes"}
         subHeading={
@@ -58,7 +59,7 @@ const PopularClasses = () => {
         {popularClasses.length > 0 &&
           popularClasses.map((item) => (
             <motion.div key={item._id} variants={cardVariants}>
-              <ClassCard item={item} isLoading={isLoading}/>
+              <ClassCard item={item} isLoading={isLoading} />
             </motion.div>
           ))}
       </motion.div>

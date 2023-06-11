@@ -3,12 +3,12 @@ import { useForm } from "react-hook-form";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 import { toast } from "react-hot-toast";
 
-const FeedbackModal = ({ modalData,refetch }) => {
+const FeedbackModal = ({ modalData, refetch }) => {
   const [axiosSecure] = useAxiosSecure();
   const {
     register,
     handleSubmit,
-reset,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -19,8 +19,8 @@ reset,
       ...data,
     });
     if (res?.data.modifiedCount > 0) {
-      reset()
-      refetch()
+      reset();
+      refetch();
       toast.success("Your feedback is provided");
     }
   };
@@ -35,7 +35,7 @@ reset,
         >
           ✕
         </button>
-        <h3 className="text-2xl font-medium text-gray-600 text-center mb-5">
+        <h3 className="text-2xl font-medium text-gray-800 text-center mb-5">
           Feedback
         </h3>
         <form className="flex flex-col mx-5" onSubmit={handleSubmit(onSubmit)}>
