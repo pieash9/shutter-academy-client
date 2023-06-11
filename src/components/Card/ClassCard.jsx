@@ -2,11 +2,33 @@
 import { toast } from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../Shared/Loader";
 
-const ClassCard = ({ item }) => {
+const ClassCard = ({ item, isLoading }) => {
   const { user } = useAuth();
-  const { classImage, className, instructorName, availableSeats, price,totalEnrolled } = item;
+  const {
+    classImage,
+    className,
+    instructorName,
+    availableSeats,
+    price,
+    totalEnrolled,
+  } = item;
   const [axiosSecure] = useAxiosSecure();
+
+  //get user role
+  const { data: userRole = [], isLoading: roleLoading } = useQuery({
+    queryKey: ["userRole"],
+    queryFn: async () => {
+      const res = await axiosSecure(`/getUserRole/${user?.email}`);
+      return res?.data?.role;
+    },
+  });
+  console.log(roleLoading);
+  if (isLoading || isLoading) {
+    return <Loader />;
+  }
 
   // only student can select class
   const handleSelect = (item) => {
@@ -17,7 +39,6 @@ const ClassCard = ({ item }) => {
       instructorName,
       availableSeats,
       price,
-      
     } = item;
     axiosSecure
       .post("/selectedClasses", {
@@ -64,7 +85,11 @@ const ClassCard = ({ item }) => {
           <button
             onClick={() => handleSelect(item)}
             // todo: make this button disabled when role is admin or instructor
-            disabled={availableSeats === 0 }
+            disabled={
+              availableSeats === 0 ||
+              userRole === "admin" ||
+              userRole === "instructor"
+            }
             className={`button-primary mt-4 `}
           >
             Select
