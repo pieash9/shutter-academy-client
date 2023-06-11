@@ -32,7 +32,7 @@ const AddClass = () => {
               ...data,
               status: "pending",
               totalEnrolled: 0,
-              student: 0,
+             
               classImage: imgURL,
             })
             .then((res) => {
@@ -81,7 +81,6 @@ const AddClass = () => {
                 placeholder="Image"
                 className="input-primary"
                 accept="image/*"
-                
               />
               {errors.className && (
                 <span className="text-warning mt-1">Image is required</span>

@@ -3,9 +3,11 @@ import SectionTitle from "../../../components/Shared/SectionTitle";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import FeedbackModal from "../../../components/Modal/FeedbackModal";
+import { useState } from "react";
 
 const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
+  const [modalData, setModalData] = useState([]);
   const {
     data: allClassesData = [],
     refetch,
@@ -29,29 +31,15 @@ const ManageClasses = () => {
       }
     }
   };
-
-
-
+  //feedback modal
+  const handleFeedbackModal = (classData) => {
+    window.isOpenFeedbackModal.showModal();
+    setModalData(classData);
+  };
   return (
     <div>
       <SectionTitle heading={"Manage Classes"} />
       <>
-        <button className="btn" onClick={() => window.my_modal_3.showModal()}>
-          open modal
-        </button>
-        <dialog id="my_modal_3" className="modal">
-          <div className="modal-box">
-            <button
-              onClick={() => window.my_modal_3.close()}
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            >
-              ✕
-            </button>
-            <h3 className="font-bold text-lg">Hello!</h3>
-            <p className="py-4">Press ESC key or click on ✕ button to close</p>
-          </div>
-        </dialog>
-
         <div className="overflow-x-auto my-10 ">
           <table className="table table-sm">
             <thead className="bg-base-300">
@@ -144,11 +132,11 @@ const ManageClasses = () => {
                           Deny
                         </button>
                         <button
-                          onClick={() => window.my_modal_3.showModal()}
+                          disabled={classData?.feedback}
+                          onClick={() => handleFeedbackModal(classData)}
                           className="  btn btn-warning btn-xs "
                         >
-                          <span>Send FeedBack</span>
-                          <FeedbackModal id="my_modal_3" />
+                          <span>{classData?.feedback ?"Already feedback" :"Send FeedBack"}</span>
                         </button>
                       </div>
                     </td>
@@ -158,6 +146,7 @@ const ManageClasses = () => {
           </table>
         </div>
       </>
+      <FeedbackModal modalData={modalData} refetch={refetch} />
     </div>
   );
 };
