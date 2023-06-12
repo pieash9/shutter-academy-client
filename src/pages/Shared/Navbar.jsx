@@ -123,9 +123,9 @@ const NavBar = () => {
           <>
             <div
               className="avatar mr-2 tooltip tooltip-bottom"
-              //   data-tip={user?.displayName || "Anonymous"}
+                data-tip={user?.email  || "Anonymous"}
             >
-              <div className="w-11 rounded-full border-2 border-blue-500">
+              <div className="w-11 rounded-full border-2 border-[#D8864B] ">
                 <img
                   src={`${
                     user?.photoURL

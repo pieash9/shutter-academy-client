@@ -148,8 +148,7 @@ const Registration = () => {
                   className="input-primary"
                 />
                 <small className="text-gray-800">
-                  Password should be at least 6 characters long, include minimum
-                  one special character and one capital letter.
+                  Password should be at least 6 characters long, include minimum one special character, capital letter & number.
                 </small>
 
                 <div className="absolute mt-12 right-12 cursor-pointer">
