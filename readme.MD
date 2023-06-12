@@ -2,6 +2,11 @@
 
 Welcome to Shutter Academy! This is a web application that provides an online platform for photography classes. Users can explore and enroll in photography classes, make payments via card, and view their payment history. Instructors can add new classes, manage class details, and interact with enrolled students.
 
+## Live Demo
+
+You can access a live demo of the Shutter Academy application [here](https://shutter-academy-f96fa.web.app/).
+
+
 ## Technologies Used
 
 The project utilizes the following technologies:
@@ -40,9 +45,6 @@ The Shutter Academy web application offers the following functionality:
    - Write feedback for the reason of accepting or denying a class.
    - Assign user roles, making users instructors or admins.
 
-## Live Demo
-
-You can access a live demo of the Shutter Academy application [here](https://shutter-academy-f96fa.web.app/).
 
 ## Setup Instructions
 
