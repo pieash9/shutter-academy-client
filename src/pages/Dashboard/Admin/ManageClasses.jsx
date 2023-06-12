@@ -4,6 +4,7 @@ import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import FeedbackModal from "../../../components/Modal/FeedbackModal";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -39,6 +40,9 @@ const ManageClasses = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Shutter Academy | Manage Classes</title>
+      </Helmet>
       <SectionTitle heading={"Manage Classes"} />
       <>
         <div className="overflow-x-auto my-10 ">

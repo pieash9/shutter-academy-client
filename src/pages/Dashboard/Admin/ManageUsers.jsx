@@ -4,6 +4,7 @@ import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import EmptyState from "../../Shared/EmptyState";
 import Loader from "../../../components/Shared/Loader";
 import { toast } from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const ManageUsers = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -33,6 +34,9 @@ const ManageUsers = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Shutter Academy | Manage Users</title>
+      </Helmet>
       <SectionTitle heading={"Manage Users"} />
       <div>
         <div className="overflow-x-auto mt-10">
@@ -70,7 +74,7 @@ const ManageUsers = () => {
                       </div>
                     </td>
                     <td>
-                      <p className="capitalize">{user?.email}</p>
+                      <p >{user?.email}</p>
                     </td>
 
                     <td>

@@ -1,17 +1,20 @@
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { useState } from "react";
 import GoogleLogin from "../Shared/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 const image_hosting_token = import.meta.env.VITE_IMGBB_KEY;
 
 const Registration = () => {
   const [show, setShow] = useState(true);
   const [confShow, setconfShow] = useState(true);
   const [passErr, setPassErr] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,8 +30,10 @@ const Registration = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    setLoading(true);
     if (data.password !== data.confPassword) {
       setPassErr("Password and Confirm Password did not match!");
+      setLoading(false);
       return;
     }
     setPassErr("");
@@ -55,7 +60,7 @@ const Registration = () => {
           createUser(data.email, data.password)
             .then((result) => {
               console.log(result.user);
-              updateUserProfile(data.name, data.imageURL).then(() => {
+              updateUserProfile(data.name, userData.image).then(() => {
                 //add user to db
                 axiosSecure
                   .put(`/users/:${data.email}`, {
@@ -66,19 +71,24 @@ const Registration = () => {
 
                     if (res.data) {
                       toast.success("Registration Successful");
+                      setLoading(false);
                       navigate(from, { replace: true });
                     }
                   });
               });
             })
-            .catch(() =>
-              toast.error("Something went wrong! please try again!")
-            );
+            .catch(() => {
+              toast.error("Something went wrong! please try again!");
+              setLoading(false);
+            });
         }
       });
   };
   return (
     <div className="hero min-h-screen bg-base-200 py-20">
+      <Helmet>
+        <title>Shutter Academy | Register</title>
+      </Helmet>
       <div className=" w-full">
         <div className="card  max-w-lg mx-auto  shadow-2xl bg-base-100">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body ">
@@ -245,7 +255,9 @@ const Registration = () => {
             </div>
 
             <div className="form-control mt-4">
-              <button className="button-primary">Register</button>
+              <button className="button-primary flex justify-center">
+                {loading ? <FaSpinner className="animate-spin " /> : "Register"}
+              </button>
             </div>
             <p className="mt-3">
               Already have an account?{" "}

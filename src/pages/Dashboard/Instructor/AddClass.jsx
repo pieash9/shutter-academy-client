@@ -3,6 +3,7 @@ import SectionTitle from "../../../components/Shared/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { toast } from "react-hot-toast";
+import { Helmet } from "react-helmet";
 const image_hosting_token = import.meta.env.VITE_IMGBB_KEY;
 
 const AddClass = () => {
@@ -45,6 +46,9 @@ const AddClass = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Shutter Academy | Add a class</title>
+      </Helmet>
       <SectionTitle heading={"Add a Class"} subHeading={""} />
 
       <div className="mt-10">

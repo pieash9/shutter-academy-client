@@ -5,6 +5,7 @@ import { useState } from "react";
 import GoogleLogin from "../Shared/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const { signIn } = useAuth();
@@ -33,6 +34,9 @@ const Login = () => {
   };
   return (
     <div className="hero min-h-screen bg-base-200">
+      <Helmet>
+        <title>Shutter Academy | Login</title>
+      </Helmet>
       <div className=" w-full">
         <div className="card  max-w-lg mx-auto  shadow-2xl bg-base-100">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body ">

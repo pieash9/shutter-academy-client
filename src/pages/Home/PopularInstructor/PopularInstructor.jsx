@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
 import axios from "axios";
-import Loader from "../../../../components/Shared/Loader";
-import SectionTitle from "../../../../components/Shared/SectionTitle";
-import InstructorCard from "../../../../components/Card/InstructorCard";
+
 import { motion } from "framer-motion";
+import Loader from "../../../components/Shared/Loader";
+import SectionTitle from "../../../components/Shared/SectionTitle";
+import InstructorCard from "../../../components/Card/InstructorCard";
 
 const PopularInstructor = () => {
   const { data: instructors = [], isLoading } = useQuery({

@@ -19,13 +19,13 @@ const Footer = () => {
           </div>
           <div className="mt-4 md:mt-0">
             <h4 className="text-white font-bold mb-2">Subscribe</h4>
-            <div className="flex">
+            <div className="flex md:flex-row flex-col ">
               <input
                 type="email"
                 placeholder="Enter your email"
                 className="rounded-l-md bg-gray-800 text-gray-200 px-4 py-2 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-[#CD684A] focus:ring-transparent"
               />
-              <button className="px-4 py-2 rounded-r-md focus:outline-none transform transition-all duration-300 bg-gradient-to-r from-[#CD684A] via-[#D8864B] to-[#E9B84C] hover:bg-gradient-to-r hover:from-[#E9B84C] hover:via-[#D8864B] hover:to-[#CD684A] ">
+              <button className="px-4 py-2 md:w-full w-1/3 mt-2 md:mt-0 md:rounded-r-md focus:outline-none transform transition-all duration-300 bg-gradient-to-r from-[#CD684A] via-[#D8864B] to-[#E9B84C] hover:bg-gradient-to-r hover:from-[#E9B84C] hover:via-[#D8864B] hover:to-[#CD684A] ">
                 Subscribe
               </button>
             </div>

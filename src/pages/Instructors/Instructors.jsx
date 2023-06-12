@@ -3,6 +3,7 @@ import SectionTitle from "../../components/Shared/SectionTitle";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../components/Shared/Loader";
 import InstructorCard from "../../components/Card/InstructorCard";
+import { Helmet } from "react-helmet";
 
 const Instructors = () => {
   const { data: instructors = [], isLoading: loading } = useQuery({
@@ -20,6 +21,9 @@ const Instructors = () => {
   console.log(instructors);
   return (
     <div className="mt-5 px-3">
+      <Helmet>
+        <title>Shutter Academy | Instructor</title>
+      </Helmet>
       <SectionTitle
         heading={"Meet our instructors"}
         subHeading={

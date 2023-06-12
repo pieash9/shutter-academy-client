@@ -7,6 +7,7 @@ import EmptyState from "../../Shared/EmptyState";
 import { FaEdit } from "react-icons/fa";
 import ClassUpdateModal from "../../../components/Modal/ClassUpdateModal";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const MyClasses = () => {
   const { user } = useAuth();
@@ -33,6 +34,9 @@ const MyClasses = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Shutter Academy | My classes</title>
+      </Helmet>
       {isLoading && <Loader />}
       <SectionTitle heading={"My classes"} />
       <div className="overflow-x-auto mt-10">
