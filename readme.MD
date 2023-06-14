@@ -50,12 +50,12 @@ The Shutter Academy web application offers the following functionality:
 
 To set up and run the Shutter Academy project locally, please follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/shutter-academy.git`
-2. Navigate to the project directory: `cd shutter-academy`
+1. Clone the repository: `git clone [https://github.com/your-username/shutter-academy.git](https://github.com/pieash9/shutter-academy-client)`
+2. Navigate to the project directory: `cd shutter-academy-client`
 3. Install dependencies: `npm install`
 4. Configure the environment variables. Create a `.env` file in the project root directory and add the necessary variables, such as database connection details, Stripe API keys, etc.
 5. Start the development server: `npm start`
-6. Open your browser and visit `http://localhost:5000` to access the Shutter Academy application.
+6. Open your browser and visit `http://localhost:5173` to access the Shutter Academy application.
 
 Please ensure you have the required dependencies and a compatible environment set up before running the project.
 
